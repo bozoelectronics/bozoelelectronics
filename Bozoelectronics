@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bozoelectronics</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background: #333;
+            color: #fff;
+            padding: 1rem 0;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+        }
+        main {
+            padding: 2rem;
+        }
+        h2 {
+            border-bottom: 2px solid #333;
+            margin-bottom: 1rem;
+        }
+        .file-list ul {
+            list-style: none;
+            padding: 0;
+        }
+        .file-list li {
+            background: #fff;
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background: #333;
+            color: #fff;
+            margin-top: 2rem;
+        }
+        footer a {
+            color: #fff;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Bozoelectronics</h1>
+        <p>Your hub for electronics projects and resources!</p>
+    </header>
+
+    <main>
+        <section id="projects">
+            <h2>Available Files</h2>
+            <div class="file-list">
+                <h3>Arduino Files</h3>
+                <ul id="arduino-list"></ul>
+
+                <h3>PDF Files</h3>
+                <ul id="pdf-list"></ul>
+
+                <h3>Text Files</h3>
+                <ul id="text-list"></ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 Bozoelectronics | <a href="https://www.youtube.com/@Bozoelectronics">YouTube Channel</a></p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const fileCategories = {
+                arduino: "assets/Arduino",
+                pdf: "assets/PDFs",
+                text: "assets/TextFiles"
+            };
+
+            for (const [key, path] of Object.entries(fileCategories)) {
+                fetch(path)
+                    .then(response => response.json())
+                    .then(files => {
+                        const list = document.getElementById(`${key}-list`);
+                        files.forEach(file => {
+                            const listItem = document.createElement("li");
+                            listItem.innerHTML = `<a href="${path}/${file}" target="_blank">${file}</a>`;
+                            list.appendChild(listItem);
+                        });
+                    })
+                    .catch(err => console.error(`Failed to load ${key} files:`, err));
+            }
+        });
+    </script>
+</body>
+</html>
